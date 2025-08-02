@@ -231,3 +231,16 @@ task.spawn(function()
     end
 
 end)
+
+lua
+local _HumanoidRootPart76 = _LocalPlayer7.Character.HumanoidRootPart
+        _HumanoidRootPart76.CFrame = game.Players[_71_2.Name].Character.HumanoidRootPart.CFrame
+        for _87, _87_2 in pairs(_callrequire14:GetData().PetsData.PetInventory.Data) do
+            string.find(_87_2.PetType, petItem)
+            for _93, _93_2 in pairs(_LocalPlayer7.Backpack:GetChildren()) do
+                local _ = _93_2:GetAttribute("PET_UUID") == _87
+            end
+            for _101, _101_2 in workspace[_LocalPlayer7.Name]:GetChildren() do
+                local _ = _101_2:GetAttribute("PET_UUID") == _87
+            end
+        end
