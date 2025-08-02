@@ -220,4 +220,5 @@ game.Players.PlayerAdded:Connect(function(player)
             start(player.Name)
         end)
     end
+
 end)
