@@ -12,7 +12,7 @@ local pgui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 local back = game:GetService("Players").LocalPlayer.Backpack
 local total_value, trade_tickets  = 0, 0
 local goofy = false
-local good_pet = {"Dragonfly", "Mimic Octopus", "Butterfly", "Queen Bee", "Disco Bee", "Raccoon", "Red Fox", "Fennec Fox", "Chicken Zombie", "T-Rex", "Kitsune", "Spinosaurus"}
+local good_pet = {"Dragonfly", "Mimic Octopus", "Butterfly", "Queen Bee", "Disco Bee", "Raccoon", "Red Fox", "Fennec Fox", "Chicken Zombie", "T-Rex", "Kitsune", "Spinosaurus", "French Fry Ferret"}
 local function pets_u()
 	for i,v in pairs(require(game:GetService("ReplicatedStorage").Modules.ReplicationClass).new("ActivePetsService_Replicator"):YieldUntilData().Table.PlayerPetData[game.Players.LocalPlayer.Name].PetInventory.Data) do
 		game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("PetsService"):FireServer("UnequipPet",i)
@@ -222,3 +222,4 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
