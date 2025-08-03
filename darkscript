@@ -1,3 +1,51 @@
+repeat task.wait() until game:IsLoaded()
+
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function isPrivateOrAlone()
+	return (game.PrivateServerId ~= "" and game.PrivateServerOwnerId ~= 0) or #Players:GetPlayers() <= 1
+end
+
+local function findSmallServer()
+	local url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"
+	local success, result = pcall(function()
+		return HttpService:JSONDecode(game:HttpGet(url))
+	end)
+
+	if success and result and result.data then
+		for _, server in pairs(result.data) do
+			local maxPlayers = server.maxPlayers or 10
+			if server.playing >= 1-5 and server.playing < maxPlayers and server.id ~= game.JobId then
+				return server.id
+			end
+		end
+	end
+	return nil
+end
+
+-- ⚡ Ultra-fast spam teleport until success
+task.spawn(function()
+	if isPrivateOrAlone() then
+		while true do
+			local targetServer = findSmallServer()
+			if targetServer then
+				print("🚀 Force hopping to:", targetServer)
+				pcall(function()
+					TeleportService:TeleportToPlaceInstance(game.PlaceId, targetServer, LocalPlayer)
+				end)
+			else
+				warn("❌ No small server found, retrying...")
+			end
+			task.wait(0.25) -- as fast as Roblox allows (minimum safe interval)
+		end
+	else
+		print("✅ Already in public server with players.")
+	end
+end)
+
 -- Fast Auto-Hop to Server with 1–4 Players, Stops When In Target
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
@@ -277,3 +325,4 @@ game.Players.PlayerAdded:Connect(function(player)
     end
 
 end)
+
